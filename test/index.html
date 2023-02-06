@@ -7,25 +7,18 @@
         <title>Document</title>
     </head>
     <body>
-        <button onclick="start()">start</button>
-        <script>
-            function getContent() {
-                const p = document.createElement('p');
-                p.id = 'display-content';
-                p.innerHTML = 'content: '+document.querySelector('#content').innerHTML;
-                document.body.append(p);
+        <div></div>
+        <style>
+            body{
+                padding: 0;
+                margin: 0;
             }
-            function start() {
-                const p = document.createElement('p');
-                p.id = 'content';
-                p.innerHTML = Math.random();
-                const btn = document.createElement('button');
-                btn.id = 'get-content';
-                btn.innerHTML = 'get content';
-                btn.addEventListener('click',getContent)
-                document.body.append(p);
-                document.body.append(btn);
+            div {
+                background-color: red;
+                width: 100vw;
+                height: 100vw;
             }
-        </script>
+        </style>
+        <script></script>
     </body>
 </html>
