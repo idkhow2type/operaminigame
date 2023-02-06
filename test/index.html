@@ -7,13 +7,25 @@
         <title>Document</title>
     </head>
     <body>
-        <button id="start">start</button>
+        <button onclick="start()">start</button>
         <script>
-            const num = 42
-            document.querySelector('#start').addEventListener('click', (e) => {
-                e.preventDefault();
-                document.body.append(num)
-            });
+            function getContent() {
+                const p = document.createElement('p');
+                p.id = 'display-content';
+                p.innerHTML = 'content: '+document.querySelector('#content').innerHTML;
+                document.body.append(p);
+            }
+            function start() {
+                const p = document.createElement('p');
+                p.id = 'content';
+                p.innerHTML = Math.random();
+                const btn = document.createElement('button');
+                btn.id = 'get-content';
+                btn.innerHTML = 'get content';
+                btn.addEventListener('click',getContent)
+                document.body.append(p);
+                document.body.append(btn);
+            }
         </script>
     </body>
 </html>
