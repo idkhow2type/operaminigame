@@ -7,14 +7,13 @@
         <title>Document</title>
     </head>
     <body>
-        <button onclick="stuff()">click me</button>
+        <button id="start">start</button>
         <script>
-            function stuff() {
-                const div = document.createElement('div');
-                div.innerHTML = 'hello';
-                document.body.append(div);    
-            }
-            
+            const num = 42
+            document.querySelector('#start').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.body.append(num)
+            });
         </script>
     </body>
 </html>
