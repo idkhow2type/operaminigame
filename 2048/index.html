@@ -5,72 +5,54 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <img src="//dummyimage.com/100x100" alt="" class="ratio1-1" />
-        <div id="grid">
-            <div class="row">
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-            </div>
-            <div class="row">
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-            </div>
-            <div class="row">
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-            </div>
-            <div class="row">
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
+        <div class="grid-wrapper">
+            <img src="https://dummyimage.com/100x100" alt="" class="ratio1-1" />
+            <div id="grid">
+                <div class="row">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+                <div class="row">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+                <div class="row">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+                <div class="row">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
             </div>
         </div>
-        <style>
-            *,
-            *::before,
-            *::after {
-                box-sizing: border-box;
-            }
-            body {
-                padding: 0;
-                margin: 0;
-                position: relative;
-            }
-            .ratio1-1 {
-                display: block;
-                width: 100%;
-                height: auto;
-            }
-            #grid {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-evenly;
-            }
-            .row{
-                height: 100%;
-                background-color: red;
-                display: flex;
-                justify-content: space-evenly;
-            }
-            .cell {
-                background-color: blue;
-                margin: 1%;
-                width: 25%;
-            }
-        </style>
+        <div class="controls">
+            <div class="row">
+                <button disabled></button>
+                <button>UP</button>
+                <button disabled></button>
+            </div>
+            <div class="row">
+                <button>LEFT</button>
+                <button>RESET</button>
+                <button>RIGHT</button>
+            </div>
+            <div class="row">
+                <button disabled></button>
+                <button>DOWN</button>
+                <button disabled></button>
+            </div>
+        </div>
     </body>
 </html>
