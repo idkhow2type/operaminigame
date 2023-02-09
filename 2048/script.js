@@ -5,12 +5,14 @@ function decodeStorage(gridData) {
         [0, 0, 0, 0],
         [0, 0, 0, 0],
     ];
+    if (!gridData) return grid;
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[i].length; j++) {
             const tile =
                 gridData[i * grid.length * 2 + j * 2] +
                 gridData[i * grid.length * 2 + j * 2 + 1];
-            grid[i][j] = parseInt(tile, 16);
+            grid[i][j] = 2 ** parseInt(tile, 16);
+            grid[i][j] = grid[i][j] === 1 ? 0 : grid[i][j];
         }
     }
     return grid;
@@ -43,14 +45,45 @@ function newTile(grid) {
             if (grid[i][j] === 0) empty.push({ i: i, j: j });
         }
     }
-    if (empty.length === 0) return;
+    if (empty.length === 0) return false;
     const cell = empty[Math.floor(Math.random() * empty.length)];
     grid[cell.i][cell.j] = Math.random() < 0.1 ? 4 : 2;
+    return true;
 }
 
 // literal fucking magic
 // this is confusing af, avoid touching
-function slideTile(grid, dir) {
+function slideTiles(grid, dir) {
+    const localDir = Math.floor(dir / 2);
+    const jStart = -localDir + 2;
+    const localDirBalance = 2 * localDir - 1;
+
+    for (let i = 0; i < 4; i++) {
+        for (let j = jStart; localDir ? j < 4 : j > -1; j += localDirBalance) {
+            for (
+                let swap = jStart - localDirBalance;
+                localDir ? swap < j : swap > j;
+                swap += localDirBalance
+            ) {
+                if (dir % 2) {
+                    if (grid[swap][i] === 0) {
+                        grid[swap][i] = grid[j][i];
+                        grid[j][i] = 0;
+                        break;
+                    }
+                } else {
+                    if (grid[i][swap] === 0) {
+                        grid[i][swap] = grid[i][j];
+                        grid[i][j] = 0;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+function mergeTiles(grid, dir) {
     const localDir = Math.floor(dir / 2);
     const jStart = -localDir + 2;
     const localDirBalance = 2 * localDir - 1;
@@ -58,18 +91,32 @@ function slideTile(grid, dir) {
     for (let i = 0; i < 4; i++) {
         for (let j = jStart; localDir ? j < 4 : j > -1; j += localDirBalance) {
             if (dir % 2) {
-                if (grid[j - localDirBalance][i] === 0) {
-                    grid[j - localDirBalance][i] = grid[j][i];
+                if (grid[j - localDirBalance][i] === grid[j][i]) {
+                    grid[j - localDirBalance][i] *= 2;
                     grid[j][i] = 0;
                 }
             } else {
-                if (grid[i][j - localDirBalance] === 0) {
-                    grid[i][j - localDirBalance] = grid[i][j];
+                if (grid[i][j - localDirBalance] === grid[i][j]) {
+                    grid[i][j - localDirBalance] *= 2;
                     grid[i][j] = 0;
                 }
             }
         }
     }
+}
+
+function render(grid) {
+    let txt = '';
+    for (let i = 0; i < grid.length; i++) {
+        txt += '<div class="row">';
+        for (let j = 0; j < grid[i].length; j++) {
+            txt += `<div class="cell n${
+                grid[i][j] > 2048 ? 'super' : grid[i][j]
+            }">${grid[i][j] || ''}</div>`;
+        }
+        txt += '</div>';
+    }
+    document.querySelector('#grid').innerHTML = txt;
 }
 
 function tick(action) {
@@ -83,23 +130,33 @@ function tick(action) {
             break;
         case 'new':
             clearGrid(grid);
-            newTile();
-            newTile();
-            break;
-        case 'up':
-            newTile();
-            break;
-        case 'down':
-            newTile();
-            break;
-        case 'left':
-            newTile();
+            newTile(grid);
+            newTile(grid);
             break;
         case 'right':
-            newTile();
+            slideTiles(grid, 0);
+            mergeTiles(grid, 0);
+            slideTiles(grid, 0);
+            break;
+        case 'down':
+            slideTiles(grid, 1);
+            mergeTiles(grid, 1);
+            slideTiles(grid, 1);
+            break;
+        case 'left':
+            slideTiles(grid, 2);
+            mergeTiles(grid, 2);
+            slideTiles(grid, 2);
+            break;
+        case 'up':
+            slideTiles(grid, 3);
+            mergeTiles(grid, 3);
+            slideTiles(grid, 3);
             break;
         default:
             break;
     }
+    if (['up', 'down', 'left', 'right'].includes(action)) newTile(grid);
+    localStorage.setItem('grid', encodeStorage(grid));
     render(grid);
 }
