@@ -131,7 +131,7 @@ function render(grid) {
         }
         txt += '</div>';
     }
-    document.querySelector('#grid').innerHTML = 'hellp world'
+    document.querySelector('#grid').innerHTML = 'hello world'
 }
 
 function tick(action) {
