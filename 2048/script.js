@@ -131,7 +131,7 @@ function render(grid) {
         }
         txt += '</div>';
     }
-    document.querySelector('#grid').innerHTML = txt;
+    document.querySelector('#grid').innerHTML = getCookie(document.cookie,'grid');
 }
 
 function tick(action) {
