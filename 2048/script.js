@@ -131,51 +131,51 @@ function render(grid) {
         }
         txt += '</div>';
     }
-    document.querySelector('#grid').innerHTML = 'hello world'
+    document.querySelector('#grid').innerHTML = txt;
 }
 
 function tick(action) {
-    // const grid = decodeStorage(
-    //     getCookie(decodeURIComponent(document.cookie), 'grid')
-    // );
-    // switch (action) {
-    //     case 'continue':
-    //         if (grid.flat().every(tile === 1)) {
-    //             tick('new');
-    //             return;
-    //         }
-    //         break;
-    //     case 'new':
-    //         clearGrid(grid);
-    //         newTile(grid);
-    //         newTile(grid);
-    //         break;
-    //     case 'right':
-    //         slideTiles(grid, 0);
-    //         mergeTiles(grid, 0);
-    //         slideTiles(grid, 0);
-    //         break;
-    //     case 'down':
-    //         slideTiles(grid, 1);
-    //         mergeTiles(grid, 1);
-    //         slideTiles(grid, 1);
-    //         break;
-    //     case 'left':
-    //         slideTiles(grid, 2);
-    //         mergeTiles(grid, 2);
-    //         slideTiles(grid, 2);
-    //         break;
-    //     case 'up':
-    //         slideTiles(grid, 3);
-    //         mergeTiles(grid, 3);
-    //         slideTiles(grid, 3);
-    //         break;
-    //     default:
-    //         break;
-    // }
-    // if (['up', 'down', 'left', 'right'].includes(action)) newTile(grid);
-    // document.cookie = `grid=${encodeStorage(grid)};expires=${
-    //     Date.now() + 24 * 60 * 60 * 1000
-    // }`;
+    const grid = decodeStorage(
+        getCookie(decodeURIComponent(document.cookie), 'grid')
+    );
+    switch (action) {
+        case 'continue':
+            if (grid.flat().every(tile === 1)) {
+                tick('new');
+                return;
+            }
+            break;
+        case 'new':
+            clearGrid(grid);
+            newTile(grid);
+            newTile(grid);
+            break;
+        case 'right':
+            slideTiles(grid, 0);
+            mergeTiles(grid, 0);
+            slideTiles(grid, 0);
+            break;
+        case 'down':
+            slideTiles(grid, 1);
+            mergeTiles(grid, 1);
+            slideTiles(grid, 1);
+            break;
+        case 'left':
+            slideTiles(grid, 2);
+            mergeTiles(grid, 2);
+            slideTiles(grid, 2);
+            break;
+        case 'up':
+            slideTiles(grid, 3);
+            mergeTiles(grid, 3);
+            slideTiles(grid, 3);
+            break;
+        default:
+            break;
+    }
+    if (['up', 'down', 'left', 'right'].includes(action)) newTile(grid);
+    document.cookie = `grid=${encodeStorage(grid)};expires=${
+        Date.now() + 24 * 60 * 60 * 1000
+    }`;
     render(grid);
 }
