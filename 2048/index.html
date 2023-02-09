@@ -47,7 +47,7 @@
             <div class="row">
                 <button onclick="tick('left')">LEFT</button>
                 <button onclick="tick('new')">RESET</button>
-                <!-- <button onclick="tick('right')">RIGHT</button> -->
+                <button onclick="tick('right')">RIGHT</button>
             </div>
             <div class="row">
                 <!-- <button disabled></button> -->
@@ -71,6 +71,7 @@
             }
 
             function tick(action) {
+                document.querySelector('#grid').innerHTML = 'hello world';
                 render(grid);
             }
         </script>
