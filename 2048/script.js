@@ -1,18 +1,3 @@
-function getCookie(cookie, key) {
-    let index = cookie.indexOf(key);
-    if (index === -1) return undefined;
-    while (cookie[index] !== '=') {
-        index++;
-    }
-    index++;
-    let value = '';
-    while (cookie[index] !== ';' && cookie[index] !== undefined) {
-        value += cookie[index];
-        index++;
-    }
-    return value;
-}
-
 function decodeStorage(gridData) {
     const grid = [
         [0, 0, 0, 0],
@@ -138,6 +123,7 @@ function tick(action) {
     const grid = decodeStorage(
         getCookie(decodeURIComponent(document.cookie), 'grid')
     );
+    // debugger
     switch (action) {
         case 'continue':
             if (grid.flat().every(tile === 1)) {
@@ -174,8 +160,6 @@ function tick(action) {
             break;
     }
     if (['up', 'down', 'left', 'right'].includes(action)) newTile(grid);
-    document.cookie = `grid=${encodeStorage(grid)};expires=${
-        Date.now() + 24 * 60 * 60 * 1000
-    }`;
+    localStorage.setItem('grid', encodeStorage(grid));
     render(grid);
 }
