@@ -18,6 +18,9 @@ body {
 .grid-wrapper {
     position: relative;
 }
+.data{
+    display: none;
+}
 #grid {
     position: absolute;
     top: 0;
