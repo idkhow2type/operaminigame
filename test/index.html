@@ -8,24 +8,10 @@
     </head>
     <body>
         <button onclick="start()">start</button>
+        <div></div>
         <script>
-            function getContent() {
-                const p = document.createElement('p');
-                p.id = 'display-content';
-                p.innerHTML =
-                    'content: ' + document.querySelector('#content').innerHTML;
-                document.body.append(p);
-            }
             function start() {
-                const p = document.createElement('p');
-                p.id = 'content';
-                p.innerHTML = Math.random();
-                const btn = document.createElement('button');
-                btn.id = 'get-content';
-                btn.innerHTML = 'get content';
-                btn.addEventListener('click', getContent);
-                document.body.append(p);
-                document.body.append(btn);
+                document.querySelector('div').innerHTML='hello'
             }
         </script>
     </body>
