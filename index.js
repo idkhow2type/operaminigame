@@ -1,10 +1,28 @@
 import express from 'express';
-const app = express();
-app.use(express.static('root'));
+import fs from 'fs';
 
+const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {});
+app.engine('html', (path, options, callback) => {
+    fs.readFile(path, (err, content) => {
+        if (err) return callback(err);
+        const rendered = content.toString().replace(/{{(\w+)}}/g, (_, p1) => {
+            return options[p1];
+        });
+        return callback(null, rendered);
+    });
+});
+
+app.use(express.static('public'));
+app.set('views', './views');
+app.set('view engine', 'html');
+
+app.get('/', (req, res) => {
+    res.render('index', {
+        placeholder: 'hello world',
+    });
+});
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

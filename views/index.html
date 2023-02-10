@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="/style.css">
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <div class="grid-wrapper">
+            <img src="https://dummyimage.com/100x100" alt="" class="ratio1-1" />
+            <div id="grid">
+                <div class="row">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+                <div class="row">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+                <div class="row">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+                <div class="row">
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                    <div class="cell"></div>
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+            <div class="row">
+                <button disabled></button>
+                <button onclick="tick('up')">UP</button>
+                <button disabled></button>
+            </div>
+            <div class="row">
+                <button onclick="tick('left')">LEFT</button>
+                <button onclick="tick('new')">RESET</button>
+                <button onclick="tick('right')">RIGHT</button>
+            </div>
+            <div class="row">
+                <button disabled></button>
+                <button onclick="tick('down')">DOWN</button>
+                <button disabled></button>
+            </div>
+        </div>
+        {{placeholder}}
+    </body>
+</html>
