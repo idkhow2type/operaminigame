@@ -1,19 +1,4 @@
-function getCookie(cookie, key) {
-    let index = cookie.indexOf(key);
-    if (index === -1) return undefined;
-    while (cookie[index] !== '=') {
-        index++;
-    }
-    index++;
-    let value = '';
-    while (cookie[index] !== ';' && cookie[index] !== undefined) {
-        value += cookie[index];
-        index++;
-    }
-    return value;
-}
-
-function decodeStorage(gridData) {
+function decodeGrid(gridData) {
     const grid = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -33,7 +18,7 @@ function decodeStorage(gridData) {
     return grid;
 }
 
-function encodeStorage(grid) {
+function encodeGrid(grid) {
     let data = '';
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[i].length; j++) {
@@ -120,7 +105,8 @@ function mergeTiles(grid, dir) {
     }
 }
 
-function render(grid) {
+export function render(gridData) {
+    const grid = decodeGrid(gridData);
     let txt = '';
     for (let i = 0; i < grid.length; i++) {
         txt += '<div class="row">';
@@ -131,21 +117,12 @@ function render(grid) {
         }
         txt += '</div>';
     }
-    document.querySelector('#grid').innerHTML = txt;
+    return txt;
 }
 
-function tick(action) {
-    const grid = decodeStorage(
-        getCookie(decodeURIComponent(document.cookie), 'grid')
-    );
-    // debugger
+export function tick(gridData, action) {
+    const grid = decodeGrid(gridData);
     switch (action) {
-        case 'continue':
-            if (grid.flat().every(tile === 1)) {
-                tick('new');
-                return;
-            }
-            break;
         case 'new':
             clearGrid(grid);
             newTile(grid);
@@ -174,9 +151,8 @@ function tick(action) {
         default:
             break;
     }
-    if (['up', 'down', 'left', 'right'].includes(action)) newTile(grid);
-    document.cookie = `grid=${encodeStorage(grid)};expires=${
-        Date.now() + 24 * 60 * 60 * 1000
-    }`;
-    render(grid);
+    let gameOver = false;
+    if (action !== 'new' && gridData !== encodeGrid(grid))
+        gameOver = !newTile(grid);
+    return { grid: encodeGrid(grid), gameOver: gameOver };
 }
