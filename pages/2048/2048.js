@@ -120,11 +120,11 @@ function render(gridData) {
     const grid = decodeGrid(gridData);
     let txt = '';
     for (let i = 0; i < grid.length; i++) {
-        txt += '<div class="row">';
+        txt += '<div class="col">';
         for (let j = 0; j < grid[i].length; j++) {
             txt += `<div class="cell n${
-                grid[i][j] > 2048 ? 'super' : grid[i][j]
-            }">${grid[i][j] || ''}</div>`;
+                grid[j][i] > 2048 ? 'super' : grid[j][i]
+            }">${grid[j][i] || ''}</div>`;
         }
         txt += '</div>';
     }
