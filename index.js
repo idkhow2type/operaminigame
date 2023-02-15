@@ -56,7 +56,6 @@ app.get('/', (req, res) => {
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.get('/:game', (req, res) => {
-    console.log(req.params);
     modules[req.params.game].start(req, res);
 });
 

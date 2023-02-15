@@ -45,9 +45,20 @@ function newTile(grid) {
             if (grid[i][j] === 0) empty.push({ i: i, j: j });
         }
     }
-    if (empty.length === 0) return false;
+    if (empty.length === 0) return;
     const cell = empty[Math.floor(Math.random() * empty.length)];
     grid[cell.i][cell.j] = Math.random() < 0.1 ? 4 : 2;
+    return;
+}
+
+function isGameOver(grid) {
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (grid[i][j] === 0) return false;
+            if (i < 3 && grid[i][j] === grid[i + 1][j]) return false;
+            if (j < 3 && grid[i][j] === grid[i][j + 1]) return false;
+        }
+    }
     return true;
 }
 
@@ -105,7 +116,7 @@ function mergeTiles(grid, dir) {
     }
 }
 
-export function render(gridData) {
+function render(gridData) {
     const grid = decodeGrid(gridData);
     let txt = '';
     for (let i = 0; i < grid.length; i++) {
@@ -120,7 +131,7 @@ export function render(gridData) {
     return txt;
 }
 
-export function tick(gridData, action) {
+function tick(gridData, action) {
     const grid = decodeGrid(gridData);
     switch (action) {
         case 'new':
@@ -151,8 +162,23 @@ export function tick(gridData, action) {
         default:
             break;
     }
-    let gameOver = false;
-    if (action !== 'new' && gridData !== encodeGrid(grid))
-        gameOver = !newTile(grid);
-    return { grid: encodeGrid(grid), gameOver: gameOver };
+    if (action !== 'new' && gridData !== encodeGrid(grid)) newTile(grid);
+    return encodeGrid(grid);
+}
+
+export function start(req, res) {
+    res.redirect(tick(null, 'new'));
+}
+
+export function update(req, res) {
+    if (req.query.action) {
+        res.redirect(`/2048/${tick(req.params.data, req.query.action)}/`);
+    } else {
+        res.render('2048', {
+            grid: render(req.params.data),
+            gameOver: isGameOver(decodeGrid(req.params.data))
+                ? '<div class="game-over">Game over!</div>'
+                : '',
+        });
+    }
 }

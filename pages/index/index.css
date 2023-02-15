@@ -9,6 +9,7 @@ body {
     margin: 0;
     background-color: #333;
     color: #ddd;
+    font-size: 0.5em;
 }
 
 h1 {
@@ -23,7 +24,7 @@ ul {
     align-items: center;
 }
 li {
-    min-width: 200px;
+    min-width: 100px;
     width: 30%;
     background-color: #444;
     border-radius: 10px;
