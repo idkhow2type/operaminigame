@@ -43,7 +43,7 @@ li div {
     border-top-right-radius: 10px;
 }
 .image {
-    background-image: var(--url);
+    background-image: url('https://picsum.photos/400/300');
     background-size: cover;
     background-repeat: no-repeat;
 }
